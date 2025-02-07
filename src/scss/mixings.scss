@@ -1,0 +1,21 @@
+/* FLEXBOX */
+@mixin flexbox($flexDirection: row, $justifyContent: initial, $alignItems: initial) {
+  display: flex;
+  flex-direction: $flexDirection;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
+}
+
+
+// SCROLLBAR HIDE
+@mixin scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  &::-webkit-scrollbar-horizontal {
+    display: none;
+  }
+}

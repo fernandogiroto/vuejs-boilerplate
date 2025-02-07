@@ -1,0 +1,132 @@
+// VARIABLES
+
+/* Colors */
+
+$transparent: transparent;
+
+$colors-palette: (
+  neutral-00: #c7c6c6,
+  neutral-10: #c7c6c6,
+  neutral-20: #c7c6c6,
+  neutral-30: #c7c6c6,
+  neutral-40: #c7c6c6,
+  neutral-50: #c7c6c6,
+  neutral-60: #2f2f2f,
+);
+
+/* Fonts */
+
+$base-font-size: 1rem;
+
+$font-weights: (
+  lighter: 300,
+  normal: 400,
+  regular: 500,
+  medium: 600,
+  bold: 700,
+  bolder: 900,
+);
+
+$font-sizes: (
+  x-small: 0.75rem,
+  small: 0.875rem,
+  normal: 1rem,
+  large: 1.25rem,
+  x-large: 1.5rem,
+);
+
+$sizes: (
+  1: 1vw,
+  2: 2vw,
+  3: 3vw,
+  4: 4vw,
+  5: 5vw,
+  6: 6vw,
+);
+
+/* Breakpoints */
+
+$sm-breakpoint: 480px;
+$md-breakpoint: 768px;
+$lg-breakpoint: 900px;
+$xl-breakpoint: 1200px;
+
+$breakpoints: (
+  'sm': $sm-breakpoint,
+  'md': $md-breakpoint,
+  'lg': $lg-breakpoint,
+  'xl': $xl-breakpoint,
+);
+
+$columns: 12;
+$gutter: 20px;
+
+/* Spacings */
+
+$spacing-values: (
+  0: 0,
+  1: 0.25rem,
+  2: 0.5rem,
+  3: 1rem,
+  4: 1.5rem,
+  5: 3rem,
+);
+
+/* Themes */
+
+$light: (
+  colors: (
+    primary: #319cc1,
+    secondary: #00ff6a,
+    tertiary: #ff7349,
+    theme: #ffffff,
+    reverse: #000000,
+    text: #000000,
+  ),
+);
+
+$dark: (
+  colors: (
+    primary: #319cc1,
+    secondary: #00ff6a,
+    tertiary: #ff7349,
+    theme: #000000,
+    reverse: #ffffff,
+    text: #ffffff,
+  ),
+);
+
+/* Mixings Styles */
+
+@mixin font-weight-variables($fonts, $prefix) {
+  @each $name, $value in $fonts {
+    $varName: '#{$prefix}-#{$name}';
+    --#{$varName}: #{$value};
+  }
+}
+
+@mixin font-size-variables($fonts, $prefix) {
+  @each $name, $value in $fonts {
+    $varName: '#{$prefix}-#{$name}';
+    --#{$varName}: #{$value};
+  }
+}
+
+@mixin color-variables($theme, $prefix) {
+  @each $key, $value in $theme {
+    $varName: '#{$key}-color';
+    --#{$varName}: #{$value};
+  }
+}
+
+@mixin color-pallete($colors) {
+  @each $key, $value in $colors {
+    --#{$key}: #{$value};
+  }
+}
+
+@mixin breakpoints-variables($breakpoints) {
+  @each $key, $value in $breakpoints {
+    --#{$key}-breakpoint: #{$value};
+  }
+}

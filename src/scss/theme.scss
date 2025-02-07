@@ -1,0 +1,232 @@
+@use '@/scss/variables.scss';
+@use '@/scss/mixings.scss';
+@use '@/scss/effects.scss';
+@use '@/scss/fonts.scss';
+@use 'sass:map';
+
+// RESET STYLES
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  touch-action: none;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  @include mixings.scrollbar-none();
+}
+
+#app {
+  @include mixings.flexbox(column, space-between, initial);
+  color: var(--text-color);
+  background: var(--theme-color);
+  font-family: 'Montserrat', sans-serif;
+  height: 100%;
+  @include mixings.scrollbar-none();
+}
+
+main {
+  @include mixings.flexbox(column, initial, initial);
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  @include mixings.scrollbar-none;
+}
+
+.container {
+  @include mixings.flexbox(column, initial, initial);
+  gap: 20px;
+  padding: 40px;
+  height: 100%;
+  width: 100%;
+  @include mixings.scrollbar-none();
+}
+
+.container-fluid {
+  @include mixings.flexbox(column, initial, initial);
+  gap: 20px;
+  padding: 0px 15px;
+  height: 100%;
+  width: 100%;
+  @include mixings.scrollbar-none();
+}
+
+// CONTENT
+a {
+  text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+// COMPOSABLES
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+// SPACINGS
+@for $i from 0 through 5 {
+  .m-#{$i} {
+    margin: map.get(variables.$spacing-values, $i);
+  }
+
+  .mt-#{$i} {
+    margin-top: map.get(variables.$spacing-values, $i);
+  }
+
+  .mr-#{$i} {
+    margin-right: map.get(variables.$spacing-values, $i);
+  }
+
+  .mb-#{$i} {
+    margin-bottom: map.get(variables.$spacing-values, $i);
+  }
+
+  .ml-#{$i} {
+    margin-left: map.get(variables.$spacing-values, $i);
+  }
+
+  .mx-#{$i} {
+    margin-left: map.get(variables.$spacing-values, $i);
+    margin-right: map.get(variables.$spacing-values, $i);
+  }
+
+  .my-#{$i} {
+    margin-top: map.get(variables.$spacing-values, $i);
+    margin-bottom: map.get(variables.$spacing-values, $i);
+  }
+
+  .p-#{$i} {
+    padding: map.get(variables.$spacing-values, $i);
+  }
+
+  .pt-#{$i} {
+    padding-top: map.get(variables.$spacing-values, $i);
+  }
+
+  .pr-#{$i} {
+    padding-right: map.get(variables.$spacing-values, $i);
+  }
+
+  .pb-#{$i} {
+    padding-bottom: map.get(variables.$spacing-values, $i);
+  }
+
+  .pl-#{$i} {
+    padding-left: map.get(variables.$spacing-values, $i);
+  }
+
+  .px-#{$i} {
+    padding-left: map.get(variables.$spacing-values, $i);
+    padding-right: map.get(variables.$spacing-values, $i);
+  }
+
+  .py-#{$i} {
+    padding-top: map.get(variables.$spacing-values, $i);
+    padding-bottom: map.get(variables.$spacing-values, $i);
+  }
+}
+
+// COMPONENTS
+@mixin generate-theme($theme) {
+  @each $color, $value in map.get($theme, colors) {
+    .button__#{$color} {
+      background-color: $value;
+      border: 1px solid $value;
+      @if $color == theme {
+        color: var(--reverse-color);
+      } @else {
+        color: var(--theme-color);
+      }
+      &:active {
+        color: var(--theme-color);
+        background-color: $value;
+        border-color: var(--theme-color);
+      }
+      &:disabled {
+        background: var(--neutral-10);
+        box-shadow:
+          0px 1px 5px 0px rgba(0, 0, 0, 0.12),
+          0px 2px 1px 0px rgba(0, 0, 0, 0.04);
+        color: var(--neutral-50);
+        border-radius: 5px;
+        border: none;
+      }
+    }
+    .button-outline__#{$color} {
+      background-color: variables.$transparent;
+      color: $value;
+      border: 1px solid $value;
+      &:hover {
+        color: $value;
+        background-color: variables.$transparent;
+        border-color: $value;
+      }
+      &:focus {
+        color: $value;
+        background-color: variables.$transparent;
+        border-color: $value;
+        box-shadow: 0 0 0 0.25rem rgb(205 205 205 / 50%);
+      }
+      &:active {
+        color: $value;
+        background-color: variables.$transparent;
+        border-color: $value;
+      }
+    }
+    .text__#{$color} {
+      color: $value;
+    }
+  }
+}
+
+// THEMES
+[data-theme='light'] {
+  @include variables.color-variables(map.get(variables.$light, colors),'light');
+  @include variables.color-pallete(variables.$colors-palette);
+  @include variables.font-size-variables(variables.$font-sizes, 'fs');
+  @include variables.font-weight-variables(variables.$font-weights, 'fw');
+  @include variables.breakpoints-variables(variables.$breakpoints);
+  @include generate-theme(variables.$light);
+}
+
+[data-theme='dark'] {
+  @include variables.color-variables(map.get(variables.$dark, colors), 'dark');
+  @include variables.color-pallete(variables.$colors-palette);
+  @include variables.font-size-variables(variables.$font-sizes, 'fs');
+  @include variables.font-weight-variables(variables.$font-weights, 'fw');
+  @include variables.breakpoints-variables(variables.$breakpoints);
+  @include generate-theme(variables.$light);
+}
